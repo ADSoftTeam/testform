@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="utf-8">
+	<title>Тестовая форма отправки сообщения</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/fileinput.min.css">
+</head>
+<body>
+	<h1 class="h2 page-header text-center">Тестовая форма отправки сообщения</h1> 
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6 col-sm-offset-3">		
+				<div class="panel panel-info">
+					<div class="panel-heading">
+						<h3 class="panel-title">Форма отправки сообщения</h3>
+					</div>          
+					<div class="panel-body">
+					<!-- Сообщение, отображаемое в случае успешной отправки данных -->
+					<div class="alert alert-success hidden" role="alert" id="successMessage">
+						<strong>Поздравляем!</strong> Ваше сообщение успешно отправлено.
+					</div>
+					<!-- Форма обратной связи -->
+					<form id="contactForm">
+						<div class="row">
+							<div id="error" class="col-sm-12" style="color: #ff0000; margin-top: 5px; margin-bottom: 5px;"></div>
+							<div class="col-sm-6">                  
+								<div class="form-group has-feedback">
+									<label for="email" class="control-label">Отправитель (e-mail):</label>
+										<input type="email" id="email" name="email" class="form-control" required="required" value="" placeholder="E-mail в формате user@site.ru" maxlength="30">
+										<span class="glyphicon form-control-feedback"></span>
+								</div>
+							</div>
+							<div class="col-sm-6">						
+								<div class="form-group has-feedback">
+									<label for="sender" class="control-label">Имя отправителя:</label>
+									<input type="text" id="sender" name="sender" class="form-control" required="required"  pattern="[А-Яа-яЁё]{1,30}" title="Только русские буквы" value=""  placeholder="Имя отправителя (кирилица)" maxlength="30">
+									<span class="glyphicon form-control-feedback"></span>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div id="error" class="col-sm-12" style="color: #ff0000; margin-top: 5px; margin-bottom: 5px;"></div>							
+							<div class="col-sm-6">                  
+								<div class="form-group has-feedback">
+									<label for="email_to" class="control-label">Получатель (e-mail):</label>
+										<input type="email_to" id="email_to" name="email_to" class="form-control" required="required" value="" placeholder="E-mail в формате user@site.ru" maxlength="30">
+										<span class="glyphicon form-control-feedback"></span>
+								</div>
+							</div>
+						</div>
+						<div class="form-group has-feedback">
+							<label for="message" class="control-label">Сообщение:</label>
+							<textarea id="message" name="message" class="form-control" rows="3" placeholder="Введите сообщение от 20 до 500 символов" minlength="20" maxlength="500" required="required"></textarea>
+						</div>
+						<div class="form-group has-feedback">
+							<label for="fileupload" class="control-label">Выберите файл на компьютере:</label>
+							<input id="fileupload" type="file" name="file">
+						</div>
+						<div class="form-group has-feedback">
+							<label for="fileupload2" class="control-label">Перетащите файл с компьютера:</label>
+							<input id="fileupload2" type="file" name="file2" accept="image/*">							
+						</div>
+						<hr>
+						<button type="submit" class="btn btn-primary pull-right">Отправить сообщение</button>
+					</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script src="/js/jquery-3.1.0.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/fileinput.min.js"></script>
+<script src="/js/script.js"></script>
+</body>
+</html>

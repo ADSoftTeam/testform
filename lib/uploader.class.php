@@ -12,6 +12,7 @@ class uploader {
 	// загрузка одного файла
 	public function upload($element) {		
 		$filename = "";
+		$outs = -1;
 		if (!empty($element['name']) && $element['size']!=0 && $element['error']==0) {			
 			if (in_array($element['type'],($this->allow_types))) {				
 				if ($element['size']<=$this->max_size) {					

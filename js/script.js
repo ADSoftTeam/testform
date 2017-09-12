@@ -46,7 +46,7 @@ $(function() {
 		var formData = new FormData(document.forms.contactForm);		
 		$.ajax({		
 			type: "POST",		
-			url: "/process.php",        
+			url: "/feedback/process.php",        
 			data: formData,
 			dataType : "json",
 			processData: false,			    

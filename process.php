@@ -65,21 +65,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	$files = array();
     if ($data['result']=='success') {
 		require_once dirname(__FILE__) . '/lib/uploader.class.php';
-		$file = new uploader("/upload",1);
+		$file = new uploader("/feedback/upload",1);
 		$err = $file->upload($_FILES['file']);
-		if ($err['error']!=0) {		
-			$data['message']='При загрузке файла 1 выявлена ошбика №'.$err;     
-			$data['result']='error';   
-		} else {
+		if ($err['error']==0) {		
 			$files[] = $err['filename'];
+		} else {
+			if ($err['error']>0) {
+				$data['message']='При загрузке файла 1 выявлена ошибка №'.$err;     
+				$data['result']='error';   
+			}
 		}
 		
 		$err = $file->upload($_FILES['file2']);
-		if ($err['error']!=0) {
-			$data['message']='При загрузке файла 2 выявлена ошбика №'.$err;     
-			$data['result']='error';   
-		} else {
+		if ($err['error']==0) {		
 			$files[] = $err['filename'];
+		} else {
+			if ($err['error']>0) {
+				$data['message']='При загрузке файла 2 выявлена ошибка №'.$err;     
+				$data['result']='error';   
+			}
 		}
     }
 	
@@ -106,7 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$mail->AddAddress($_POST['email_to']);
 		foreach ($files as $f) {
 			$mail->AddAttachment($f['url'],$f['name']);			
-			unset($f['url']);
 		}
 		// отправляем письмо
 		if ($mail->Send()) {			
@@ -114,13 +117,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		} else {
 			$data['message']='Ошибка отправки письма';
 			$data['result']='error';
-		}      
+		}
+		// удалим 
+		foreach ($files as $f) {
+			$del = $_SERVER['DOCUMENT_ROOT'].$file->path."/".$f['name'];
+			if (file_exists($del)) {
+				unlink($del);
+			}
+		}
 	}
   // формируем ответ, который отправим клиенту
   header('Content-type: application/json');
   $code = ($data['result']=="error") ? "400" : "200";
-  http_response_code($code);
-  echo json_encode($data, JSON_UNESCAPED_UNICODE);
+  if (function_exists('http_response_code')) {
+	  http_response_code($code);
+  } else {
+	  header("HTTP/1.x $code");  
+  }
+  echo json_encode($data);
   exit();  
 }
 ?>
